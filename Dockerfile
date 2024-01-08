@@ -10,7 +10,7 @@ ENV XDG_RUNTIME_DIR=/tmp
 
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 
-# Dependencies for building packages
+# Dependencies for building packages (using python3)
 
 RUN apt-get install -y python-rosdep \
     python-rosinstall \
@@ -21,6 +21,9 @@ RUN apt-get install -y python-rosdep \
     python3-venv
 
 RUN pip3 install catkin-pkg
+RUN pip3 install pyyaml
+RUN pip3 install empy==3.3.4
+
 
 # Dependencies for catkin python
 
