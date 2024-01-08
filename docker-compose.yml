@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  roscore:
+    container_name: roscore
+    image: "ros:melodic-desktop-full"
+    command: roscore
+    network_mode: "host"
+    volumes:
+      - ~/catkin_ws:/root/catkin_ws
+      - ~/.ssh:/root/.ssh
+  rosbash:
+    container_name: rosbash
+    image: "ros:melodic-desktop-full"
+    command: bash
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    network_mode: "host"
+    volumes:
+      - ~/catkin_ws:/root/catkin_ws
+      - ~/.ssh:/root/.ssh
+      # Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+    # Needed to display graphical applications
+    privileged: true
+    environment:
+      # Allows graphical programs in the container.
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
